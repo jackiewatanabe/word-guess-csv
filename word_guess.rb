@@ -1,17 +1,37 @@
+require 'csv'
+
 class WordGuess
   def initialize(debug = false)
     # are we in debug mode?
     @debug = debug
 
     # possible words, selected at random
+    # @words = {
+    #   "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
+    #   "m" => %w(plain claim brine crime alive bride skine drive slime stein jumpy),
+    #   "h" => %w(
+    #       machiavellian prestidigitation plenipotentiary quattuordecillion
+    #       magnanimous unencumbered bioluminescent circumlocution
+    #     )
+    # }
+
     @words = {
-      "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
-      "m" => %w(plain claim brine crime alive bride skine drive slime stein jumpy),
-      "h" => %w(
-          machiavellian prestidigitation plenipotentiary quattuordecillion
-          magnanimous unencumbered bioluminescent circumlocution
-        )
+      "e" => [],
+      "m" => [],
+      "h" => []
     }
+    my_words = CSV.open("words.csv")
+
+    my_words.each do |line|
+      if line[0] == "e"
+        @words["e"] = line
+      elsif line[0] == "m"
+        @words["m"] == line
+      elsif line[0] == "h"
+        @words["h"] == line
+      end
+    end
+
 
     # players attempts allowed by difficulty
     @tries = {
